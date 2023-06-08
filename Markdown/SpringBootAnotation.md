@@ -7,13 +7,15 @@
   - [**@Entity. @Table. @Id**](#entity-table-id)
   - [**@Column**](#column)
   - [**@RequestMapping**](#requestmapping)
-      - [**GetMapping**](#getmapping)
-      - [**PostMapping**](#postmapping)
-      - [**PutMapping**](#putmapping)
-      - [**DeleteMapping**](#deletemapping)
+      - [**GET请求**](#get请求)
+      - [**POST请求**](#post请求)
+      - [**PUT请求**](#put请求)
+      - [**DELETE请求**](#delete请求)
+  - [**@GeneratedValue**](#generatedvalue)
+  - [**@Autowired**](#autowired)
 
 ## **@SprinBootApplication**
-    @SpringBootApplication 是一个组合注解，它将 @SpringBootConfiguration、@EnableAutoConfiguration 和 @ComponentScan 这三个注解组合在了一起.
+    @SpringBootApplication 将 @SpringBootConfiguration、@EnableAutoConfiguration 和 @ComponentScan 这三个注解组合在了一起.
     
 
 - **@SpringBootConfiguration** 注解标注该类为 Spring Boot 应用的配置类，通常与 **@Configuration** 注解一起使用.
@@ -25,7 +27,7 @@
 因此，**@SpringBootApplication** 注解的作用是定义一个 Spring Boot 应用程序，并启用自动配置和组件扫描.通常情况下，我们将它放在应用程序的入口类上，即包含 main 方法的类上，这样 Spring Boot 就能够正确地加载并运行应用程序.
 
 ## **@CrossOrigin**
-    @CrossOrigin 是 Spring Framework 提供的一个注解，它用于处理跨域请求.跨域请求指的是，浏览器发出的请求地址和当前页面所在的地址不一致，例如从 http://localhost:8080 发出的请求访问了 http://api.example.com 上的资源，这种情况下就涉及到跨域请求.
+    @CrossOrigin 用于处理跨域请求。跨域请求指的是，浏览器发出的请求地址和当前页面所在的地址不一致，例如从 http://localhost:8080 发出的请求访问了 http://api.example.com 上的资源，这种情况下就涉及到跨域请求.
 
 默认情况下，浏览器会限制跨域请求的访问，以保护用户的隐私和安全.但在某些情况下，我们可能需要开启跨域请求，例如前后端分离的项目中，前端页面和后端接口可能运行在不同的服务器上，这时候就需要使用 **@CrossOrigin** 注解来开启跨域请求.
 
@@ -53,7 +55,7 @@ public class ApiController {
 ```
 
 ## **@RestController**
-    @RestController 是 Spring Framework 提供的一个注解，它的作用是将一个类标记为 RESTful Web 服务的控制器（Controller）.
+    @RestController 的作用是将一个类标记为 RESTful Web 服务的控制器（Controller）.
 
 在 Spring Web 应用中，控制器是负责处理客户端请求并返回响应的核心组件.传统的 Spring MVC 应用中，控制器通常使用 **@Controller** 注解来定义，并使用 **@RequestMapping** 注解来处理请求.
 
@@ -99,8 +101,6 @@ public class Employee {
     
     @Column(name = "email")
     private String email;
-    
-    // ... 省略其他字段和方法
 }
 ```
  在上面的代码中，我们使用 **@Entity** 注解标记了 Employee 类，表示它是一个实体类.使用 **@Table** 注解指定了该类对应的数据库表名为 "employees".使用 @Id 和 **@GeneratedValue** 注解标记了 id 字段，表示它是主键，并指定了主键的生成策略为自增长.firstName、lastName 和 email 字段将映射到数据库表的三个列中，分别对应表中的 "first_name"、"last_name" 和 "email" 列.
@@ -154,8 +154,6 @@ public class Employee {
     
     @Column(name = "email")
     private String email;
-    
-    // ... 省略其他字段和方法
 }
 ```
  在上面的代码中，我们使用 **@Column** 注解标记了 id、firstName、lastName 和 email 字段，分别指定了它们对应数据库表中的列名.例如，firstName 字段对应数据库表中的 "first_name" 列，email 字段对应 "email" 列.其他属性的默认值均使用了 JPA 规范中的默认值.
@@ -239,13 +237,13 @@ public class UserController {
 ```bash
 curl http://localhost:8080/api/users/123
 ```
-在上面的命令中，请求 URL 为 http://localhost:8080/api/users/123，其中 123 是路径变量.
+在上面的命令中，请求 URL 为 "http://localhost:8080/api/users/123"，其中 123 是路径变量.
 
 以下是获取所有用户信息的 GET 请求示例：
 ```bash
 curl http://localhost:8080/api/users
 ```
-在上面的命令中，请求 URL 为 http://localhost:8080/api/users.
+在上面的命令中，请求 URL 为 http://localhost:8080/api/users
 
 ---
 
@@ -273,7 +271,7 @@ public class UserController {
 ```json
 curl -X POST -H "Content-Type: application/json" -d '{"name":"John Doe","email":"johndoe@example.com"}' http://localhost:8080/api/users
 ```
-在上面的命令中，-X POST 指定请求方法为 POST，-H "Content-Type: application/json" 指定请求体的类型为 JSON 格式，-d '{"name":"John Doe","email":"johndoe@example.com"}' 指定请求体内容.请求 URL 为 http://localhost:8080/api/users.
+在上面的命令中，-X POST 指定请求方法为 POST，-H "Content-Type: application/json" 指定请求体的类型为 JSON 格式，-d '{"name":"John Doe","email":"johndoe@example.com"}' 指定请求体内容.请求 URL 为 "http://localhost:8080/api/users"
 
 ---
 
@@ -301,7 +299,7 @@ public class UserController {
 ```json
 curl -X PUT -H "Content-Type: application/json" -d '{"name":"John Doe","email":"johndoe@example.com"}' http://localhost:8080/api/users/123
 ```
-在上面的命令中，-X PUT 指定请求方法为 PUT，-H "Content-Type: application/json" 指定请求体的类型为 JSON 格式，-d '{"name":"John Doe","email":"johndoe@example.com"}' 指定请求体内容.请求 URL 为 http://localhost:8080/api/users/123，其中 123 是路径变量
+在上面的命令中，-X PUT 指定请求方法为 PUT，-H "Content-Type: application/json" 指定请求体的类型为 JSON 格式，-d '{"name":"John Doe","email":"johndoe@example.com"}' 指定请求体内容.请求 URL 为 "http://localhost:8080/api/users/123"，其中 123 是路径变量
 
 #### **DELETE请求**
 
@@ -325,4 +323,70 @@ public class UserController {
 ```bash
 curl -X DELETE http://localhost:8080/api/users/123
 ```
-在上面的命令中，请求 URL 为 http://localhost:8080/api/users/123，其中 123 是路径变量.
+在上面的命令中，请求 URL 为 "http://localhost:8080/api/users/123"，其中 123 是路径变量.
+
+## **@GeneratedValue**
+    @GeneratedValue 是 JPA 注解之一，用于指定实体类中自动生成的主键字段的生成策略。
+
+    在 JPA 中，@GeneratedValue 注解通常与 @Id 注解一起使用，用于标识实体类的主键字段。
+@GeneratedValue 注解有不同的生成策略选项，常用的包括：
+
+   - **GenerationType.IDENTITY**：使用数据库自动生成的主键（例如自增主键）作为实体类的主键。适用于支持自动生成主键的数据库，如 MySQL 的自增列。
+        ```java
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        ```
+   - **GenerationType.SEQUENCE**：使用数据库序列（Sequence）生成主键。适用于支持序列的数据库，如 Oracle。
+        ```java
+        @Id
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        private Long id;
+        ```
+   - **GenerationType.TABLE**：使用一个特定的数据库表来生成主键。每次生成主键时，都会从该表中获取下一个可用的主键值。
+        ```java
+        @Id
+        @GeneratedValue(strategy = GenerationType.TABLE)
+        private Long id;
+        ```
+   - **GenerationType.AUTO**：根据底层数据库的支持情况自动选择适当的主键生成策略。这通常是默认的生成策略。 
+        ```java
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private Long id;
+        ```
+通过使用 @GeneratedValue 注解，可以告诉 JPA 在插入新实体时如何生成主键值。具体选择哪种生成策略取决于应用程序的需求和底层数据库的支持情况。
+
+## **@Autowired**
+    @Autowired 用于实现自动装配（Autowired）功能，即自动将依赖对象注入到目标对象中。
+
+    在 Spring 中，通过 @Autowired 注解可以完成对类成员、构造函数和方法参数的自动装配。当 Spring 容器创建对象时，会检查被 @Autowired 注解标记的字段、构造函数或方法参数的类型，并尝试在容器中查找匹配的 Bean 对象进行注入。
+
+    使用 @Autowired 注解可以避免手动编写大量的依赖注入代码，提高开发效率和代码可读性。
+
+下面是 @Autowired 注解的几种常见用法：
+
+- 字段自动装配：
+    ```java
+    @Autowired
+    private SomeDependency dependency;
+    ```
+- 构造函数自动装配：
+    ```java
+    private SomeDependency dependency;
+
+    @Autowired
+    public MyClass(SomeDependency dependency) {
+    this.dependency = dependency;
+    }
+    ```
+- 方法参数自动装配：
+    ```java
+    @Autowired
+    public void setDependency(SomeDependency dependency) {
+    this.dependency = dependency;
+    }
+    ```
+需要注意的是，**@Autowired** 注解默认使用按类型匹配的方式进行自动装配。如果存在多个匹配的 Bean 对象，可以使用 **@Qualifier** 注解指定具体的 Bean 名称进行注入。另外，可以通过 **@Autowired** 的 **required** 属性来指定依赖是否必需，默认为 true，表示必需。
+
+除了 **@Autowired** 注解，Spring 还提供了其他注解来实现依赖注入，如 **@Inject**、**@Resource** 等。它们的功能类似，但是注解名称和一些细节有所不同，具体使用哪个注解取决于项目的具体配置和需求。
